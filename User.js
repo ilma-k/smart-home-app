@@ -9,21 +9,20 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebase";
 
 /*
-Simple user interface in which user will be able to change their phone number,
+Simple user interface to handle changing user's email address and their
 their password and to log out of the application
 */
 
 //imported icons
 import Icon from "react-native-vector-icons/Ionicons";
 import Message from "react-native-vector-icons/Fontisto";
-import Logout from "react-native-vector-icons/AntDesign";
-import BackIcon from "react-native-vector-icons/Ionicons";
 import Buttons from "../components/Buttons";
 
 const { width: WIDTH } = Dimensions.get("window");
 
 const User = () => {
   const navigation = useNavigation();
+  
 
   const handleSignOut = () => {
     auth
@@ -32,6 +31,9 @@ const User = () => {
         navigation.replace("Start");
       })
       .catch(error => alert(error.message));
+  };
+  const handlePassword = () => {
+        navigation.replace("Password");
   };
   return (
     <View style={styles.backgroundContainer}>
@@ -43,9 +45,7 @@ const User = () => {
             color={"#055B5C"}
             style={styles.inputIcon}
           />
-          <Text style={styles.userName}>
-            {auth.currentUser?.name}</Text>
-          <Text>
+          <Text style={styles.text}>
             <Message
               name={"email"}
               size={20}
@@ -56,18 +56,11 @@ const User = () => {
           </Text>
         </View>
         <View style={styles.buttonsContainer}>
-          <Buttons title="Change password"></Buttons>
+          <Buttons title="Change password/email" onPress={handlePassword}></Buttons>
           <Buttons title="Log Out" onPress={handleSignOut}>
-            <Logout name={"logout"} size={20} color={"#055B5C"} />
           </Buttons>
         </View>
       </View>
-
-      <BackIcon
-        name={"ios-return-down-back-outline"}
-        size={20}
-        color={"#055B5C"}
-      />
     </View>
   );
 };
@@ -81,7 +74,7 @@ const styles = StyleSheet.create({
     height: null,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#dad1e3",
+    backgroundColor: "#024956",
   },
   logoContainer: {
     alignItems: "center",
@@ -98,9 +91,10 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     margin: 5,
-    paddingTop: 10,
+    paddingTop: 5,
   },
-  userName: {
-    fontSize: 26,
+  text: {
+    fontSize: 20,
+    fontWeight: "400",
   },
 });
